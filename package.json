@@ -5,7 +5,9 @@
   "license": "BSD-2-Clause",
   "description": "",
   "scripts": {
-    "test": "mocha  --recursive -R xunit tests/*"
+    "test-jetkins": "mocha --compilers js:babel/register --recursive -R xunit testsUI/Zombie/*",
+    "test": "mocha --compilers js:babel/register testsUI/Zombie/*",
+    "server": "babel-node --stage 0 server/server.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +20,8 @@
     "mocha": "~2.1.0",
     "selenium-webdriver": "~2.44.0",
     "supertest": "~0.15.0",
-    "zombie": "~2.4.0",
-    "chai": "~2.1.0"
+    "chai": "~2.1.0",
+    "babel": "~5.1.9",
+    "zombie": "~4.0.7"
   }
 }

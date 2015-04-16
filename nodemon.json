@@ -1,0 +1,8 @@
+{
+  "restartable": "rs",
+  "ignore": [
+  ],
+  "verbose": true,
+  "execMap": {"js": "node --harmony" },
+  "watch": ["server","client","testsUI","testsService"]
+}
