@@ -2,8 +2,13 @@
 	all implemenations details about tests a non-programmer don't care/understand
 **/
 
+
 export const CONSTANTS_UI = {
-  	"ALL_IMAGES" : '.photo-item .image'
+	"URL_TO_LOGIN" 				: 'http://localhost:8000/',
+	"PATH_TO_USER_INPUT"		: "#user-input",
+	"PATH_TO_PASSWORD_INPUT"	: "#password-input",
+	"URL_TO_APP" 				: 'http://localhost:8000/client/app.html',
+	"ALL_IMAGES" 				: '.photo-item .image'
 };
 
 export const TESTS_UI = {

@@ -3,6 +3,7 @@ var path = require('path');
 var app = express();
 
 var server = require('http').createServer(app);
+//server is listening on localhost:8000/
 server.listen(8000);
 
 ///////////////////////////////service server ////////////////////////////////////
@@ -27,33 +28,25 @@ app.route('/services/photos/')
 	});
 
 
+////////////////////////login process //////////////////////////////////////////
+app.route('/login').get(function(req, res) {
+		var query = req.query;
+		//res.send('try to login process');
+		if(query.user_name === "zombie" && query.password === "do-you-need-brain?")
+			res.redirect('client/app.html');
+		else
+			res.redirect('/');
+	});
 
-class toto {
-
-	constructor(x){
-
-	}
-
-
-}
 ///////////////////////////////static files server ////////////////////////////////////
-
-var appsDir = path.join(__dirname, '..', "client");
+var appsDir = path.join(__dirname, '..');
 
 app.get('/', function(req, res) {
-	res.sendFile(appsDir + "/index.html");
+	res.sendFile(appsDir + "/client/login.html");
 });
 
-
-app.get('/index.html', function(req, res) {
-	res.sendFile(appsDir + "/index.html");
-});
-app.get('/page.html', function(req, res) {
-	res.sendFile(appsDir + "/page.html");
-});
-
-
-app.use("/img/", function(req, res, next) {
+//whatever webrowser is asking with "localhost:8000/client"  ... send it !
+app.use("/client/", function(req, res, next) {
 	res.sendFile(appsDir + req.client._httpMessage.req.originalUrl);
 });
 
@@ -61,13 +54,19 @@ app.use("/bower_components/", function(req, res, next) {
 	res.sendFile(appsDir + req.client._httpMessage.req.originalUrl);
 });
 
-//this must be done into photo services.
-app.use("/server/img/photos/", function(req, res, next) {
-		res.sendFile(appsDir + req.client._httpMessage.req.originalUrl);
+app.use("/css/", function(req, res, next) {
+	res.sendFile(appsDir + req.client._httpMessage.req.originalUrl);
+});
+
+app.use("/fonts", function(req, res, next) {
+	res.sendFile(path.join(appsDir, "bower_components/bootstrap", decodeURI(req.client._httpMessage.req.originalUrl)));
 });
 
 app.use(function(req, res, next) {
 	res.setHeader('Content-Type', 'text/plain');
 	console.log("not founcd " + req.client._httpMessage.req.originalUrl);
+	console.log("appp name  " + appsDir);
 	res.sendStatus(404);
 });
+
+//export server as server;
