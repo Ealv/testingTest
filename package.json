@@ -7,7 +7,7 @@
   "scripts": {
     "test-jetkins": "mocha --compilers js:babel/register --recursive -R xunit testsUI/Zombie/*",
     "test": "mocha --compilers js:babel/register testsUI/Zombie/*",
-    "server": "babel-node --stage 0 server/server.js"
+    "run": "babel-node --stage 0 server/server.js"
   },
   "repository": {
     "type": "git",

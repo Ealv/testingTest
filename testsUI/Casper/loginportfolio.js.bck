@@ -1,0 +1,82 @@
+
+
+initializePage = function(){
+    var style = document.createElement('style');
+    var text = document.createTextNode('body { background: #fff;}');
+    style.setAttribute('type', 'text/css');
+    style.appendChild(text);
+    document.head.insertBefore(style, document.head.firstChild);
+};
+
+
+casper.on( 'page.initialized', function(){
+    this.evaluate(function(){
+        var isFunction = function(o) {
+          return typeof o == 'function';
+        };
+
+        var bind,
+          slice = [].slice,
+          proto = Function.prototype,
+          featureMap;
+
+        featureMap = {
+          'function-bind': 'bind'
+        };
+
+        function has(feature) {
+          var prop = featureMap[feature];
+          return isFunction(proto[prop]);
+        }
+
+        // check for missing features
+        if (!has('function-bind')) {
+          // adapted from Mozilla Developer Network example at
+          // https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+          bind = function bind(obj) {
+            var args = slice.call(arguments, 1),
+              self = this,
+              nop = function() {
+              },
+              bound = function() {
+                return self.apply(this instanceof nop ? this : (obj || {}), args.concat(slice.call(arguments)));
+              };
+            nop.prototype = this.prototype || {}; // Firefox cries sometimes if prototype is undefined
+            bound.prototype = new nop();
+            return bound;
+          };
+          proto.bind = bind;
+        }
+    });
+});
+
+capturePage = function(casp,name){
+    var height = 1024;
+    var width = 1280;
+    casp.evaluate(initializePage);
+    casp.viewport(width, height);
+    casp.capture(name);
+};
+
+
+var urlLogin = "http://localhost:8000/";
+
+casper.test.begin('should propose angular, react and backbone marionette', 5, function suite(test) {
+    casper.start(urlLogin, function() {
+       // test.assertExists('H2', "main form is found");
+       // test.assertTitle("Portfolio Eric Alvernhe","title portFoliois ok ");
+       test.assertExists('#react', "react link is presnet");
+        capturePage(this,'login.png');
+        this.click("#react");
+    }).then(function(){
+        //this.waitForSelectorTextChange('#photo-list', function() {
+        this.waitForSelectorTextChange('#photo-list', function() {
+            test.assertExists('#photoapp', "photo app found");
+            console.log("i capture react ");
+            capturePage(this,'react.png');
+        });
+    });
+    casper.run(function() {
+        test.done();
+    });
+});

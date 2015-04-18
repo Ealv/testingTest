@@ -11,5 +11,7 @@ The Study will be on Zombie, Casper.js and Selenium WebDriver.
 install node
 install babel globally  npm install babel -g
 install zombie, casper
+npm install -g casperjs
+
 npm update
 npm test
