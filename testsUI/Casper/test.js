@@ -1,12 +1,6 @@
-
 var height = 1024;
 var width = 1680;
-
-
 var numberOftest = 2;
-
-//import {server} from '../../server/server.js';
-
 
 var CONSTANTS_UI = {
 	"URL_TO_LOGIN" 				: 'http://localhost:8000/',
@@ -20,6 +14,7 @@ var CONSTANTS_UI = {
 
 var TESTS_UI = {
 	COUNT_IMAGES : "[].slice.call(document.querySelectorAll('" + CONSTANTS_UI.ALL_IMAGES + "')).length",
+	COUNT_IMAGES2 : function(){return [].slice.call(document.querySelectorAll(CONSTANTS_UI.ALL_IMAGES)).length;},
 	ALL_IMAGES_ARE_DOWNLOADED : function () {
 	//return false;
 	var allImages = window.document.querySelectorAll('.photo-item img');
@@ -52,6 +47,16 @@ casper.test.begin('Loggin process can be done ', numberOftest, function (test) {
 		casper.then(function() {
 			test.assertEquals(casper.getCurrentUrl(),CONSTANTS_UI.URL_TO_APP,	"url app is ok");
 		});
+	});
+
+	casper.open(CONSTANTS_UI.URL_TO_APP, function() {
+	});
+	casper.then(function() {
+		test.assertEquals(casper.getCurrentUrl(),CONSTANTS_UI.URL_TO_APP,	"url app is ok");
+		test.assertEquals(casper.getHTML('h1'), 'Hello'				,"content text is 'Hello'");
+  		test.assertElementCount(CONSTANTS_UI.ALL_IMAGES, 2,"two images are present");
+		casper.viewport(width, height);
+		casper.capture('screenshots/app-casper.png');
 	});
 
 	casper.run(function() {
