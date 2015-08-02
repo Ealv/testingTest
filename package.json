@@ -6,6 +6,7 @@
   "description": "",
   "scripts": {
     "test-jetkins": "mocha --compilers js:babel/register --recursive -R xunit testsUI/Zombie/*",
+    "test-casper": "casperjs test testsUI/Casper/test.js",
     "test": "mocha --compilers js:babel/register testsUI/Zombie/*",
     "run": "babel-node --stage 0 server/server.js"
   },
@@ -22,6 +23,6 @@
     "supertest": "~0.15.0",
     "chai": "~2.1.0",
     "babel": "~5.1.9",
-    "zombie": "~4.0.7"
+    "zombie": "4.0.8"
   }
 }
